@@ -1,0 +1,9 @@
+argparse
+torch
+torchvision
+tqdm
+pillow
+numpy
+matplotlib
+boto3
+efficientnet_pytorch
