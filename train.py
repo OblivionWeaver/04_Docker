@@ -148,7 +148,7 @@ def train_phase(model,dataloaders,device,criterion,optimizer):
         _, preds = torch.max(outputs, 1) 
         loss = criterion(outputs, labels)
         loss.backward()
-        #複数のミニバッチ単位でパラメータ更新
+        
         if (i+1)%10 == 0:
             optimizer.step()
             optimizer.zero_grad()
@@ -177,17 +177,15 @@ def  train(args):
         train_phase(model,dataloaders_dict['train'], device, criterion, optimizer)
         
 
-    torch.save(model.state_dict(),MOP)
+    torch.save(model.state_dict(),os.path.join(MOP,"saved_model"))
 
     print('finish')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-dir", type=str,
-                        default=os.environ["SM_MODEL_DIR"])
-    parser.add_argument("--train-dir", type=str,
-                        default=os.environ["SM_CHANNEL_TRAINING"])
+    parser.add_argument("--model-dir", type=str,default=os.environ["SM_MODEL_DIR"])
+    parser.add_argument("--train-dir", type=str,default=os.environ["SM_CHANNEL_TRAIN"])
     parser.add_argument("--learning-rate", type=float, default=0.01)
     parser.add_argument('--batch-size', type=int, default=2)
     parser.add_argument('--num-epochs', type=int, default=10)

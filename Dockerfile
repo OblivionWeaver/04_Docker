@@ -1,10 +1,12 @@
 # FROM:ベースとなるDockerimageの指定．詳しくはDockerHubのBase Imagesを参照．
-FROM python:3.6.9
-
+FROM python
+USER root
 
 ENV PROGRAM_DIR=/opt/ml/code
-RUN pip install --upgrade pip
+
 RUN apt-get update
+RUN apt-get install -y vim less
+
 RUN pip install sagemaker-training
 # /opt/ml/code ディレクトリの作成
 RUN mkdir -p $PROGRAM_DIR
